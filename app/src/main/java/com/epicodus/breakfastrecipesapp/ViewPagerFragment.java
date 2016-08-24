@@ -16,8 +16,14 @@ public class ViewPagerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         int index = getArguments().getInt(KEY_RECIPE_INDEX);
-        Toast.makeText(getActivity(), Recipes.names[index], Toast.LENGTH_SHORT).show();
+        getActivity().setTitle(Recipes.names[index]);
         View view = inflater.inflate(R.layout.fragment_viewpager, container, false);
         return view;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        getActivity().setTitle(getResources().getString(R.string.app_name));
     }
 }
