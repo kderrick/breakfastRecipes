@@ -8,6 +8,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ListAdapter extends RecyclerView.Adapter {
+    private final ListFragment.OnRecipeSelectedInterface mListener;
+
+    public ListAdapter(ListFragment.OnRecipeSelectedInterface listener) {
+        mListener = listener;
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
@@ -29,6 +35,7 @@ public class ListAdapter extends RecyclerView.Adapter {
 
         private TextView mTextView;
         private ImageView mImageView;
+        private int mIndex;
 
         public ListViewHolder(View itemView) {
             super(itemView);
@@ -40,12 +47,13 @@ public class ListAdapter extends RecyclerView.Adapter {
         public void bindView(int position) {
             mTextView.setText(Recipes.names[position]);
             mImageView.setImageResource(Recipes.resourceIds[position]);
+            mIndex = position;
 
         }
 
         @Override
         public void onClick(View view) {
-
+            mListener.onListRecipeSelected(mIndex);
         }
     }
 }
