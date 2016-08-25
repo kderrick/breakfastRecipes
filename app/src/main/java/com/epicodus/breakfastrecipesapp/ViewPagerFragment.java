@@ -21,11 +21,14 @@ public class ViewPagerFragment extends Fragment {
         getActivity().setTitle(Recipes.names[index]);
         View view = inflater.inflate(R.layout.fragment_viewpager, container, false);
 
+        final IngredientsFragment ingredientsFragment = new IngredientsFragment();
+        final DirectionsFragment directionsFragment = new DirectionsFragment();
+
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewPager);
         viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                return null;
+                    return position == 0 ? ingredientsFragment : directionsFragment;
             }
 
             @Override
