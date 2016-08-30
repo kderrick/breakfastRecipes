@@ -23,14 +23,18 @@ public class IngredientsFragment extends Fragment {
         LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.ingredientsLayout);
         String[] ingredients = Recipes.ingredients[index].split("`");
         mCheckBoxes = new CheckBox[ingredients.length];
-        setUpCheckBoxes(ingredients, linearLayout );
+        boolean[] checkedBoxes = new boolean[mCheckBoxes.length];
+        if(savedInstanceState != null && savedInstanceState.getBooleanArray(KEY_CHECKED_BOXES) != null) {
+            checkedBoxes = savedInstanceState.getBooleanArray(KEY_CHECKED_BOXES);
+        }
+        setUpCheckBoxes(ingredients, linearLayout, checkedBoxes );
 
         return view;
 
 
     }
 
-    private void setUpCheckBoxes(String[] ingredients, ViewGroup container) {
+    private void setUpCheckBoxes(String[] ingredients, ViewGroup container, boolean[] checkedBoxes) {
         int i = 0;
         for (String ingredient : ingredients) {
             mCheckBoxes[i] = new CheckBox(getActivity());
@@ -38,6 +42,9 @@ public class IngredientsFragment extends Fragment {
             mCheckBoxes[i].setTextSize(20f);
             mCheckBoxes[i].setText(ingredient);
             container.addView(mCheckBoxes[i]);
+            if(checkedBoxes[i]) {
+                mCheckBoxes[i].toggle();
+            }
             i++;
         }
     }
