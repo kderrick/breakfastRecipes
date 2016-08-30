@@ -22,6 +22,7 @@ public class IngredientsFragment extends Fragment {
 
         LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.ingredientsLayout);
         String[] ingredients = Recipes.ingredients[index].split("`");
+
         mCheckBoxes = new CheckBox[ingredients.length];
         boolean[] checkedBoxes = new boolean[mCheckBoxes.length];
         if(savedInstanceState != null && savedInstanceState.getBooleanArray(KEY_CHECKED_BOXES) != null) {
