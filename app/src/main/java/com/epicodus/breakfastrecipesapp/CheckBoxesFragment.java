@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
-public class CheckBoxesFragment extends Fragment {
+public abstract class CheckBoxesFragment extends Fragment {
 
     private static final String KEY_CHECKED_BOXES = "key_checked_boxes";
     private CheckBox[] mCheckBoxes;
@@ -18,16 +18,12 @@ public class CheckBoxesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         int index = getArguments().getInt(ViewPagerFragment.KEY_RECIPE_INDEX);
-        boolean isIngredients = getArguments().getBoolean(ViewPagerFragment.KEY_IS_INGREDIENTS);
+
         View view = inflater.inflate(R.layout.fragment_checkboxes, container, false);
 
         LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.checkBoxesLayout);
-        String[] contents;
-        if(isIngredients) {
-            contents = Recipes.ingredients[index].split("`");
-        } else {
-            contents = Recipes.directions[index].split("`");
-        }
+        String[] contents = getContents(index);
+
 
         mCheckBoxes = new CheckBox[contents.length];
         boolean[] checkedBoxes = new boolean[mCheckBoxes.length];
@@ -40,6 +36,8 @@ public class CheckBoxesFragment extends Fragment {
 
 
     }
+
+    public abstract String[] getContents(int index);
 
     private void setUpCheckBoxes(String[] contents, ViewGroup container, boolean[] checkedBoxes) {
         int i = 0;
